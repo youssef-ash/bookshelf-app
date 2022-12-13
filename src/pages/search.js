@@ -37,7 +37,7 @@ export default function Search() {
           key={result.id}
           title={result.title}
           authors={result.authors}
-          cover={result.imageLinks.thumbnail}
+          cover={result.imageLinks?.thumbnail}
         />
       ));
 
@@ -45,10 +45,8 @@ export default function Search() {
     if (query) {
       searchBooks();
     } else {
+      setResults([]);
       hideError();
-      setTimeout(() => {
-        setResults([]);
-      }, 500);
     }
   }, [query]);
 
@@ -69,7 +67,7 @@ export default function Search() {
       </div>
       {invalidSearch && <div className="search-error">No Books Found</div>}
       <div className="search-books-results">
-        <ol className="books-grid">{renderResults}</ol>
+        <ol className="books-grid">{query && renderResults}</ol>
       </div>
     </div>
   );
