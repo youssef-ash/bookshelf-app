@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { search } from '../utils/BooksAPI';
 import Book from '../components/book';
 
-export default function Search() {
+export default function Search({ books }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [invalidSearch, setInvalidSearch] = useState(false);
@@ -30,9 +30,15 @@ export default function Search() {
     }
   };
 
+  const filterResults = (r) => {
+    const alreadyPicked = books.map((book) => book.id);
+
+    return r.filter((result) => !alreadyPicked.includes(result.id));
+  };
+
   const renderResults = invalidSearch
     ? null
-    : results.map((result) => (
+    : filterResults(results)?.map((result) => (
         <Book
           key={result.id}
           title={result.title}
