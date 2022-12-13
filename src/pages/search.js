@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { search } from '../utils/BooksAPI';
 import Book from '../components/book';
 
-export default function Search({ books }) {
+export default function Search({ books, updateShelf }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [invalidSearch, setInvalidSearch] = useState(false);
@@ -41,9 +41,11 @@ export default function Search({ books }) {
     : filterResults(results)?.map((result) => (
         <Book
           key={result.id}
+          id={result.id}
           title={result.title}
           authors={result.authors}
           cover={result.imageLinks?.thumbnail}
+          updateShelf={updateShelf}
         />
       ));
 
